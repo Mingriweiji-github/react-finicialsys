@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as RecordsAPI from "../utils/RecordsAPI"
 
 export default class RecordForm extends Component {
     constructor(props) {
@@ -28,16 +28,37 @@ export default class RecordForm extends Component {
         console.log([name],value);
 
     }
+    handleSubmit(e) {
+        e.preventDefault();
+        const data = {
+            date: this.state.date,
+            title:this.state.title,
+            amount: Number.parseInt(this.state.amount,0)
+        };
+        RecordsAPI.create(data).then(
+            response => {
+                this.props.handleNewRecord(response.data);
+                this.setState({
+                    date:"",
+                    title:"",
+                    amount:""
+                })
+            }
+        ).catch(
+            error => console.log(error.message)
+        )
+    }
+
     render() {
         return (
-            <form className="form-inline">
-                <div className="from-group">
+            <form className="form-inline mb-3" onSubmit={this.handleSubmit.bind(this)}>
+                <div className="from-group mr-1">
                     <input type="text" onChange={this.handleChange.bind(this)} className="form-control" placeholder="Date" name="date" value={this.state.date}/>
                 </div>
-                <div className="from-group">
+                <div className="from-group mr-1">
                     <input type="text" onChange={this.handleChange.bind(this)} className="form-control" placeholder="Title" name="title" value={this.state.title}/>
                 </div>
-                <div className="from-group">
+                <div className="from-group mr-1">
                     <input type="text" onChange={this.handleChange.bind(this)} className="form-control" placeholder="Amount" name="amount" value={this.state.amount}/>
                 </div>
                 <button className="btn btn-primary" disabled={!this.valid()}>Add Record</button>

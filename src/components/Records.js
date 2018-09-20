@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Record from './Record'
-import axios from 'axios';
 import * as RecordsAPI from "../utils/RecordsAPI"
 import RecordForm from "./RecordForm"
+
 class Records extends Component {
   constructor() {
     super();
@@ -14,7 +14,7 @@ class Records extends Component {
   }
   componentDidMount(){
       console.log("React did mounted");
-      axios.get(`${RecordsAPI.api}`).then(
+      RecordsAPI.getAll().then(
           response => this.setState({
               records:response.data,
               isLoaded:true
@@ -26,6 +26,9 @@ class Records extends Component {
           })
       )
   }
+    addRecord(record) {
+
+    }
   render() {
       const {error, isLoaded,records} = this.state;
       let recordComponent;
@@ -52,7 +55,7 @@ class Records extends Component {
       return (
             <div>
                 <h2>Records</h2>
-                <RecordForm />
+                <RecordForm handleNewRecord={this.addRecord.bind(this)}/>
                 {recordComponent}
             </div>
       );
