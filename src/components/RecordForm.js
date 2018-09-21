@@ -33,7 +33,7 @@ export default class RecordForm extends Component {
         const data = {
             date: this.state.date,
             title:this.state.title,
-            amount: Number.parseInt(this.state.amount,0)
+            amount: this.state.amount
         };
         RecordsAPI.create(data).then(
             response => {

@@ -27,7 +27,7 @@ class Records extends Component {
       )
   }
     addRecord(record) {
-
+        console.log(record);
     }
   render() {
       const {error, isLoaded,records} = this.state;
