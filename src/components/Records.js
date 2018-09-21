@@ -45,7 +45,21 @@ class Records extends Component {
             ]
         },() => {console.log(this.state.records)});
     }
-
+    editRecord(record,data) {
+        const recordIndex = this.state.records.indexOf(record);
+        const newRecords = this.state.records.map((item,index) => {
+            if (index != recordIndex){
+                return item;
+            }
+            return{
+                ...item,
+                ...data
+            }
+        });
+        this.setState({
+            records:newRecords
+        })
+    }
     render() {
         const {error, isLoaded, records} = this.state;
         let recordComponent;
@@ -61,10 +75,11 @@ class Records extends Component {
                         <th>Date</th>
                         <th>Title</th>
                         <th>Amount</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {records.map((record) => <Record key={record.id} {...record} />)}
+                    {records.map((record) => <Record key={record.id} record={record} handleEditRecord={this.editRecord.bind(this)} />)}
                     </tbody>
                 </table>
             );
