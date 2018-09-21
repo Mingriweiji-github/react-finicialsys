@@ -48,7 +48,7 @@ class Records extends Component {
     editRecord(record,data) {
         const recordIndex = this.state.records.indexOf(record);
         const newRecords = this.state.records.map((item,index) => {
-            if (index != recordIndex){
+            if (index !== recordIndex){
                 return item;
             }
             return{
@@ -59,6 +59,14 @@ class Records extends Component {
         this.setState({
             records:newRecords
         })
+    }
+    deleteRecord(record) {
+        console.log(record);
+        const recordIndex = this.state.records.indexOf(record);
+        const newRecords = this.state.records.filter((item,index) => index != recordIndex);
+        this.setState({
+            records:newRecords
+        });
     }
     render() {
         const {error, isLoaded, records} = this.state;
@@ -79,7 +87,14 @@ class Records extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {records.map((record) => <Record key={record.id} record={record} handleEditRecord={this.editRecord.bind(this)} />)}
+                    {records.map((record) =>
+                        (<Record
+                            key={record.id}
+                            record={record}
+                            handleEditRecord={this.editRecord.bind(this)}
+                            handleDeleteRecord={this.deleteRecord.bind(this)}
+                        />)
+                    )}
                     </tbody>
                 </table>
             );
