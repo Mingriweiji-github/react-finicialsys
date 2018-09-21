@@ -14,18 +14,18 @@ export default class RecordForm extends Component {
         return this.state.date && this.state.title && this.state.amount
     }
     handleChange(event) {
-        // let name, obj;
-        // name = event.target.name;
-        // this.setState((
-        //     obj = {},
-        //     obj["" + name] = event.target.value,
-        //     obj
-        // ));
-        const {name, value} = event.target;
-        this.setState ({
-            [name]:value
-        });
-        console.log([name],value);
+        let name, obj;
+        name = event.target.name;
+        this.setState((
+            obj = {},
+            obj["" + name] = event.target.value,
+            obj
+        ));
+        // const {name, value} = event.target;
+        // this.setState ({
+        //     [name]:value
+        // });
+        // console.log([name],value);
 
     }
     handleSubmit(e) {
@@ -37,6 +37,7 @@ export default class RecordForm extends Component {
         };
         RecordsAPI.create(data).then(
             response => {
+                console.log(response.data);
                 this.props.handleNewRecord(response.data);
                 this.setState({
                     date:"",
